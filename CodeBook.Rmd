@@ -59,9 +59,9 @@ All the files except features and activity_labels were put toghether using a com
                     |               |  features.txt
      __________       ___________      ____________                    
   subject_train.txt | y_train.txt   |  X_train.txt  
- ____________________________________________________
+     __________       ___________      ____________                    
   subject_test.txt  | y_test.txt    |  X_test.txt   
- ____________________________________________________
+     __________       ___________      ____________                    
    
    The resulting data frame had 10299 rows and 563 Vs. All of the observations of all of the 30 subjects in every variable available.
    
