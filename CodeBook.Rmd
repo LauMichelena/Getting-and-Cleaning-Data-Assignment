@@ -55,9 +55,9 @@ The code is divided in five steps, according to the assignment.
 
 All the files except features and activity_labels were put toghether using a combination of `cbind` and `rbind`as shown in run_analysis.R and following this instructions:
    
- ____________________________________________________
+     __________       ___________      ____________
                     |               |  features.txt
- ____________________________________________________                    
+     __________       ___________      ____________                    
   subject_train.txt | y_train.txt   |  X_train.txt  
  ____________________________________________________
   subject_test.txt  | y_test.txt    |  X_test.txt   
