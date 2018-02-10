@@ -10,28 +10,29 @@ output:
 Getting and Cleaning Data Assingment
 By Laura M Michelena.
 
-Based on the data set provided by:
-==================================================================
-Human Activity Recognition Using Smartphones Dataset
-Version 1.0
-==================================================================
-Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
-Smartlab - Non Linear Complex Systems Laboratory
-DITEN - Universit� degli Studi di Genova.
-Via Opera Pia 11A, I-16145, Genoa, Italy.
-activityrecognition@smartlab.ws
-www.smartlab.ws
-==================================================================
+Course Project for Getting and Cleaning Data (Coursera's course)¨
 
+**CodeBook.md**
 
-In this repo you'll find:
-1) The README file providing a description of the files in the repo
-2) Codebook. With a detail explanation of the steps taken to answer the questions in the quiz. A lists of the variables in the final data frame, withe their class and description.
-3) The run_analysis () funtion in R.
+It explains in general how the data was treated and why some desitions where made. How to go from the raw data to the proccessed data and finally to de tidy data set. It has:
+
+ - Experimental design and background
+ - Packages needed to run the code properly
+ - A description of the Raw data
+ - A general description of the steps to create a Processed data along with pictures of the results.
+ - Variable Codes of the final tidy data set
+
+**run_analysis.R**
+
+This script contains the code and detailed explanation of every step on the way from the raw data to the tidy data set.
+To run the code  all you need to do is select all the information on the script and the click the ¨Run¨buttom.
+
+**Assignment.txt**
+This is the final output from the step 5 of the code. It contains a tidy data set as described in the instructions. For explanation of what the variables are and how they are measured, read de CodeBook.md
 
 
 =====
-Please read the codebook if you have any doubts as to why I made the desitions that I made in this assigment.
+
 
 Thank you for grading me
-=====
+
