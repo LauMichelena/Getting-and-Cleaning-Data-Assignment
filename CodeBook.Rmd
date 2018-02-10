@@ -58,10 +58,10 @@ All the files except features and activity_labels were put toghether using a com
      __________       ___________      ____________
                     |               |  features.txt
      __________       ___________      ____________                    
-  subject_train.txt | y_train.txt   |  X_train.txt  
+  subject_train.txt  |  y_train.txt   |   X_train.txt  
   
      __________       ___________      ____________                    
-  subject_test.txt  | y_test.txt    |  X_test.txt   
+  subject_test.txt   | y_test.txt     |  X_test.txt   
   
      __________       ___________      ____________                    
    
