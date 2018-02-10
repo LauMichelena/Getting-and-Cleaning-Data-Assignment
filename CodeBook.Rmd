@@ -1,0 +1,67 @@
+---
+title: "CodeBook"
+author: "Laura Michelena"
+date: "10 February 2018"
+output: html_document
+---
+
+This codebooks contains information on the tidy data set for the assignment. If you wish to read more about the original raw data set, please refer to this link http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones and to the features.txt and the original README.txt files for the assignment.
+
+  #  QUESTION 1 Merges the training and the test sets 
+   To answer this question I decided to merge the train and test sets as follows:
+   
+ ----------------------------------------------------
+                    |               |  features.txt
+ ----------------------------------------------------                    
+  subject_train.txt | y_train.txt   |  X_train.txt  
+ ----------------------------------------------------
+  subject_test.txt  | y_test.txt    |  X_test.txt   
+ ----------------------------------------------------
+   
+   The resulting data frame had 10299 rows and 563 Vs. All of the observations of all of the 30 subjects in every variable available.
+   
+   # QUESTION 2 Extracts only the measurements on the mean and standard deviation for each measurement.
+    The instructions only want the Mean and Stand Deviation. I took the mean() and std() of each 17 vectors. Of those vectors, 8 of them had 3-axial signals, That adds: 8Vs , with 3 axes and two measures (mean and std) plus 9 Vs with two measures: 66 Vs.  
+    It was possible to grep() other variable names with Mean, mainly angle() Vs,and the meanFreq(), but I decided not to take the angle() because they werent part of the time domain signals nor the frequenccy by FFT. And meanFreq() was the mean freqquency, not the average of the measure. 
+   
+   The resulting data frame had 10299 rows and 68 Vs (the subject, the activity and the 66 measurements).
+   
+     # QUESTION 3 Uses descriptive activity names to name the activities in the data set
+     Merging the tables would reorganice the order of the roads, so I change the names manually with replace () following the numbers in activity_lables.txt. Additinally, following the tidy data info in the videos, everything is lower case and it doesn't include symbols '_'
+     
+      # QUESTION 4 Appropriately labels the data set with descriptive variable names.
+      The instructions on "descriptive variable names" weren't really clear, so there were few options:
+      "mean time body aceleration axis x" was explanatory and detailed but had spaces
+      "meantimebodyacelerationaxisx" without spaces it was imposible to read.
+      "mean.time.body.aceleration.x" was readable but it had a symbols and it waas too long.
+      So I settled for:
+      "tBodyAccMeanX" it has uppercases but is readable and it doesn't include spaces or symbols.
+      
+      The codes in this questions removes the parenthesis, removes '-', and spaces.
+      
+      # QUESTION 5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+      This was done in three steps:
+       1.convert de Vs subject and activity to factors
+       2. Use dplyr to group by both of them
+       3. summarise the mean of the 66 Vs by each combination of subject*activity.
+       
+       The result was a data frame that follows the tidy data principles with 180 observarions (each subject by each activity) and 68 Vs. It can be view in the console and in the Data Viewer.
+       
+    ## Description of the Variables in this data frame:
+    
+    1.**subject:** Factor variable with 30 levels. ID of each of the 30 subjects.
+    2.**activity:** Factor variable with 6 levels. descriprion of the activity. Levels: laying, sitting, standing, walking, walking up and walking down.
+    3. **tBodyAccMeanX:** numerical variable. Average of mean time Body Acceleration in axis X.
+    Like varaible 3, all of the 66 variables were numerical, and their names were constructed in four levesl in this order:
+    ..1. Time or frequency signals. Denoted by 't'or 'f'.
+    ..2. Signal: either Body Acceleration Signals (denoted by 'Body') or Gravity Acceleration Signals (denoted by 'Gravity')
+    ..3. Accelerometer signasl (denoted by 'Acc') or Gyroscope signals (denoted by 'Gyro).
+    ..4 In some cases, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (denoted by 'Jerk')
+    ..5 In others, the magnitude of the three-dimensional signals were calculated using the Euclidean norm (denoted 'Mag')
+    ..6 Measurment: Either the average (denoted 'Mean') or the standar deviation (denoted 'std')
+    ..7 3-axial raw signal to identify the direction of the feature vector for each pattern. (Denoted 'X', 'Y' or 'Z').
+    
+
+    
+
+      

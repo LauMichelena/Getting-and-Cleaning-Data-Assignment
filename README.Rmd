@@ -1,0 +1,37 @@
+---
+title: "README"
+author: "Laura Michelena"
+date: "10 February 2018"
+output:
+  word_document: default
+  html_document: default
+---
+
+Getting and Cleaning Data Assingment
+By Laura M Michelena.
+
+Based on the data set provided by:
+==================================================================
+Human Activity Recognition Using Smartphones Dataset
+Version 1.0
+==================================================================
+Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
+Smartlab - Non Linear Complex Systems Laboratory
+DITEN - Università degli Studi di Genova.
+Via Opera Pia 11A, I-16145, Genoa, Italy.
+activityrecognition@smartlab.ws
+www.smartlab.ws
+==================================================================
+
+
+In this repo you'll find:
+1) The README file providing a description of the files in the repo
+2) Codebook. With a detail explanation of the steps taken to answer the questions in the quiz. A lists of the variables in the final data frame, withe their class and description.
+3) The run_analysis () funtion in R.
+
+
+=====
+Please read the codebook if you have any doubts as to why I made the desitions that I made in this assigment.
+
+Thank you for grading me
+=====
