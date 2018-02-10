@@ -5,10 +5,55 @@ date: "10 February 2018"
 output: html_document
 ---
 
-This codebooks contains information on the tidy data set for the assignment. If you wish to read more about the original raw data set, please refer to this link http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones and to the features.txt and the original README.txt files for the assignment.
+**Experimental design and background:**
+---------------------------------------
 
-  #  QUESTION 1 Merges the training and the test sets 
-   To answer this question I decided to merge the train and test sets as follows:
+Human Activity Recognition Using Smartphones Dataset
+
+Version 1.0
+
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
+
+**
+
+Packages needed
+---------------
+Besides the basic packages in R, for this code you'll need:
+
+ - dplyr
+
+**
+
+
+**Raw data:**
+-------------
+
+The raw data was download from:
+`https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip`
+And unzip manually
+
+These are the seven files inside used to create the data:
+
+ - X_test.txt: data from the subject on the test set
+ - X_train.txt: data from the subject on the train set
+ - y_test.txt: activities (in numbers) corresponding to the test set
+ - y_train.txt: activities (in numbers) corresponding to the train set
+ - features.txt: variables names in a data.frame
+ - subject_test.txt subject id for the test set
+ - subject_train.txt: subject id for the train set
+ - activity_labels.txt: names corresponding to the activity's number un the y test and train sets.
+
+*How the files are combined is explained in the Processed data section*
+
+*Processed data:**
+-------------------
+
+The code is divided in five steps, according to the assignment.
+
+
+ **Step 1: Merges the training and the test sets to create one data set.**
+
+All the files except features and activity_labels were put toghether using a combination of `cbind` and `rbind`as shown in run_analysis.R and following this instructions:
    
  ----------------------------------------------------
                     |               |  features.txt
@@ -20,16 +65,20 @@ This codebooks contains information on the tidy data set for the assignment. If 
    
    The resulting data frame had 10299 rows and 563 Vs. All of the observations of all of the 30 subjects in every variable available.
    
-   # QUESTION 2 Extracts only the measurements on the mean and standard deviation for each measurement.
-    The instructions only want the Mean and Stand Deviation. I took the mean() and std() of each 17 vectors. Of those vectors, 8 of them had 3-axial signals, That adds: 8Vs , with 3 axes and two measures (mean and std) plus 9 Vs with two measures: 66 Vs.  
-    It was possible to grep() other variable names with Mean, mainly angle() Vs,and the meanFreq(), but I decided not to take the angle() because they werent part of the time domain signals nor the frequenccy by FFT. And meanFreq() was the mean freqquency, not the average of the measure. 
+   **Step 2: Extracts only the measurements on the mean and standard deviation for each measurement.**
+
+For this step, only de variables ending in mean() or std() where considered; meanFreq() was not taken into acount because is the weighted average of the frequency components, not an average of a measure of an activity; angles() where not taken into acount because they were not vectors, but angles of a vector. 
+
+In consecuense, the final part of this step was a data frame of 10229x68 (Subject, Activity and 66 measurements). 
    
-   The resulting data frame had 10299 rows and 68 Vs (the subject, the activity and the 66 measurements).
+
    
-     # QUESTION 3 Uses descriptive activity names to name the activities in the data set
+ **Step 3: Uses descriptive activity names to name the activities in the data set**
+
      Merging the tables would reorganice the order of the roads, so I change the names manually with replace () following the numbers in activity_lables.txt. Additinally, following the tidy data info in the videos, everything is lower case and it doesn't include symbols '_'
      
-      # QUESTION 4 Appropriately labels the data set with descriptive variable names.
+**Step 4: Appropriately labels the data set with descriptive variable names.**
+
       The instructions on "descriptive variable names" weren't really clear, so there were few options:
       "mean time body aceleration axis x" was explanatory and detailed but had spaces
       "meantimebodyacelerationaxisx" without spaces it was imposible to read.
@@ -39,27 +88,44 @@ This codebooks contains information on the tidy data set for the assignment. If 
       
       The codes in this questions removes the parenthesis, removes '-', and spaces.
       
-      # QUESTION 5 From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+ **Step 5: From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.**
+ As explained in several threads in the forum, both a wide or long form of tidy are correct (wide meaning 180 rows and 68 colums, and long 11880 rows and 4 colums) I chose the former because I beleive is easier to work with.
       This was done in three steps:
        1.convert de Vs subject and activity to factors
        2. Use dplyr to group by both of them
        3. summarise the mean of the 66 Vs by each combination of subject*activity.
        
-       The result was a data frame that follows the tidy data principles with 180 observarions (each subject by each activity) and 68 Vs. It can be view in the console and in the Data Viewer.
+       The result was a data frame that follows the tidy data principles with 180 observarions (each subject by each activity) and 68 Vs. 
        
-    ## Description of the Variables in this data frame:
+**
+
+Variable Codes:
+---------------
+The variables in the data frame where:
     
     1.**subject:** Factor variable with 30 levels. ID of each of the 30 subjects.
     2.**activity:** Factor variable with 6 levels. descriprion of the activity. Levels: laying, sitting, standing, walking, walking up and walking down.
-    3. **tBodyAccMeanX:** numerical variable. Average of mean time Body Acceleration in axis X.
-    Like varaible 3, all of the 66 variables were numerical, and their names were constructed in four levesl in this order:
-    ..1. Time or frequency signals. Denoted by 't'or 'f'.
-    ..2. Signal: either Body Acceleration Signals (denoted by 'Body') or Gravity Acceleration Signals (denoted by 'Gravity')
-    ..3. Accelerometer signasl (denoted by 'Acc') or Gyroscope signals (denoted by 'Gyro).
-    ..4 In some cases, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (denoted by 'Jerk')
-    ..5 In others, the magnitude of the three-dimensional signals were calculated using the Euclidean norm (denoted 'Mag')
-    ..6 Measurment: Either the average (denoted 'Mean') or the standar deviation (denoted 'std')
-    ..7 3-axial raw signal to identify the direction of the feature vector for each pattern. (Denoted 'X', 'Y' or 'Z').
+    3 -68: numeric vectors from -1 to +1, named as follows:   
+       For each of this 8 measures it include 3 axial values and one mean and standard deviation. Meaning that 8x3x2= 48 variables
+ - tBodyAcc: raw signals in time of the body's aceleration measure with the accelerometer in a 3-axial way (X, Y, Z).
+ - tGravityAcc: raw signals in time  of the gravity's aceleration measure with the accelerometer in a 3-axial way (X, Y, Z).
+ - tBodyAccJerk:  in time, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals, measure with the accelerometer in a 3-axial way (X, Y, Z).
+ - tBodyGyro: raw signals in time  of the body's aceleration measure with the gyroscope  in a 3-axial way (X, Y, Z). 
+ - tBodyGyroJerk: in time, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals, measure with the gyroscope in a 3-axial way (X, Y, Z).
+ - fBodyAcc: raw signals in frecuency of the body's aceleration measure with the accelerometer in a 3-axial way (X, Y, Z).
+ - fBodyAccJerk: in frecuency, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals, measure with the accelerometer in a 3-axial way (X, Y, Z).
+ - fBodyGyro:  raw signals in frecuency of the body's aceleration measure with the gyroscope  in a 3-axial way (X, Y, Z).
+
+   For each of this 9 measures it inlcudes one mean and one standard deviation. Meaning that 9x2= 18
+ - tBodyAccMag: Magnitude of the body's aceleration signals were calculated using the Euclidean norm 
+ - tGravityAccMag: Magnitude of the gravity's aceleration signals were calculated using the Euclidean norm 
+ - tBodyAccJerkMag: Magnitude of these three-dimensional signals were calculated using the Euclidean norm 
+ - tBodyGyroMag: Magnitude of these three-dimensional signals were calculated using the Euclidean norm 
+ - tBodyGyroJerkMag: Magnitude of these three-dimensional signals were calculated using the Euclidean norm 
+ - fBodyAccMag:Magnitude of these three-dimensional signals were calculated using the Euclidean norm 
+ - fBodyAccJerkMag:Magnitude of these three-dimensional signals were calculated using the Euclidean norm    
+ - fBodyGyroMag:Magnitude of these three-dimensional signals were calculated using the Euclidean norm  
+ - fBodyGyroJerkMag: Magnitude of these three-dimensional signals were calculated using the Euclidean norm 
     
 
     
